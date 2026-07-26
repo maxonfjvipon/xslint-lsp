@@ -5,10 +5,10 @@ name: reuse
 'on':
   push:
     branches:
-      - main
+      - master
   pull_request:
     branches:
-      - main
+      - master
 jobs:
   reuse:
     timeout-minutes: 15

@@ -5,10 +5,10 @@ name: yamllint
 'on':
   push:
     branches:
-      - main
+      - master
   pull_request:
     branches:
-      - main
+      - master
 jobs:
   yamllint:
     runs-on: ubuntu-24.04
