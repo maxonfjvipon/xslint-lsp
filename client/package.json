@@ -51,7 +51,7 @@
     "publish": "vsce publish"
   },
   "dependencies": {
-    "vscode-languageclient": "^9.0.1",
+    "vscode-languageclient": "^10.1.0",
     "xslint-lsp": "^0.0.1"
   },
   "devDependencies": {
