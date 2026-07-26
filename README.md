@@ -4,6 +4,8 @@ A [Language Server Protocol](https://microsoft.github.io/language-server-protoco
 server that surfaces [xslint](https://github.com/maxonfjvipon/xslint)'s
 diagnostics as you type — squiggles in your editor instead of a failed build.
 
+[![DevOps By Rultor.com](https://www.rultor.com/b/maxonfjvipon/xslint-lsp)](https://www.rultor.com/p/maxonfjvipon/xslint-lsp)
+
 [![test](https://github.com/maxonfjvipon/xslint-lsp/actions/workflows/test.yml/badge.svg)](https://github.com/maxonfjvipon/xslint-lsp/actions/workflows/test.yml)
 [![codecov](https://codecov.io/gh/maxonfjvipon/xslint-lsp/branch/master/graph/badge.svg)](https://codecov.io/gh/maxonfjvipon/xslint-lsp)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/maxonfjvipon/xslint-lsp/blob/master/LICENSE.txt)

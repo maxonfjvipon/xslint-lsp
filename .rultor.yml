@@ -1,0 +1,19 @@
+# SPDX-FileCopyrightText: Copyright (c) 2025-2026 Max Trunnikov
+# SPDX-License-Identifier: MIT
+---
+docker:
+  image: maxonfjvipon/rultor-image-js:latest
+install: |
+  npm install --no-color
+merge:
+  script: |-
+    npm run lint
+    npm test
+    npm run coverage
+release:
+  pre: false
+  script: |-
+    [[ "${tag}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || exit -1
+    npm run lint
+    npm test
+    npm run coverage
