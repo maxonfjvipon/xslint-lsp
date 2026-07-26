@@ -1,0 +1,68 @@
+# SPDX-FileCopyrightText: Copyright (c) 2025-2026 Max Trunnikov
+# SPDX-License-Identifier: MIT
+---
+name: cascade
+'on':
+  repository_dispatch:
+    types: [xslint-released]
+permissions:
+  contents: write
+concurrency:
+  group: cascade-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  cascade:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          token: ${{ secrets.DISPATCH_TOKEN }}
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - name: Bump @maxonfjvipon/xslint to the released version
+        id: bump
+        env:
+          NEW: ${{ github.event.client_payload.version }}
+        run: |
+          current="$(node -p "require('./package.json').dependencies['@maxonfjvipon/xslint']")"
+          current="${current//[!0-9.]/}"
+          if [ "${current}" = "${NEW}" ]; then
+            echo "changed=false" >> "${GITHUB_OUTPUT}"
+            echo "Already depends on ${NEW}; nothing to do"
+            exit 0
+          fi
+          npm install --save "@maxonfjvipon/xslint@^${NEW}"
+          echo "changed=true" >> "${GITHUB_OUTPUT}"
+      - name: Validate against the new xslint
+        if: steps.bump.outputs.changed == 'true'
+        run: |
+          npm run lint
+          npm test
+          npm run coverage
+      - name: Compute this tool's next patch version
+        id: next
+        if: steps.bump.outputs.changed == 'true'
+        run: |
+          latest="$(npm view xslint-lsp version)"
+          next="$(echo "${latest}" | awk -F. '{printf "%d.%d.%d", $1, $2, $3 + 1}')"
+          echo "version=${next}" >> "${GITHUB_OUTPUT}"
+      - name: Record the change in the changelog
+        if: steps.bump.outputs.changed == 'true'
+        env:
+          NEW: ${{ github.event.client_payload.version }}
+          NEXT: ${{ steps.next.outputs.version }}
+        run: node scripts/changelog-add.js "${NEXT}" "${NEW}"
+      - name: Commit the bump and tag the release
+        if: steps.bump.outputs.changed == 'true'
+        env:
+          NEW: ${{ github.event.client_payload.version }}
+          NEXT: ${{ steps.next.outputs.version }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package.json package-lock.json CHANGELOG.md
+          git commit -m "chore: bump @maxonfjvipon/xslint to ${NEW}"
+          git push origin HEAD:master
+          git tag "${NEXT}"
+          git push origin "${NEXT}"
