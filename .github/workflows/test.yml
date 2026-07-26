@@ -5,10 +5,10 @@ name: test
 'on':
   push:
     branches:
-      - master
+      - main
   pull_request:
     branches:
-      - master
+      - main
 concurrency:
   group: test-${{ github.ref }}
   cancel-in-progress: true

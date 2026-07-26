@@ -5,10 +5,10 @@ name: coverage
 'on':
   push:
     branches:
-      - master
+      - main
   pull_request:
     branches:
-      - master
+      - main
 concurrency:
   group: coverage-${{ github.ref }}
   cancel-in-progress: true
