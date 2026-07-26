@@ -25,7 +25,9 @@ jobs:
       - name: Stamp the released version
         env:
           VERSION: ${{ github.ref_name }}
-        run: sed -i "s/\"version\": \"0\.0\.0\"/\"version\": \"${VERSION}\"/" package.json
+        run: |
+          sed -i "s/\"version\": \"0\.0\.0\"/\"version\": \"${VERSION}\"/" \
+            package.json
       - run: npm run lint
       - run: npm test
       - run: npm run coverage
