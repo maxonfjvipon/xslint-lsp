@@ -2,3 +2,4 @@
 .vscodeignore
 package-lock.json
 **/*.map
+**/*.svg

@@ -6,6 +6,8 @@ version = 1
 path = [
     "**.json",
     "**.md",
+    "**.png",
+    "**.svg",
     "**.xsl",
     "**/.gitignore",
     "**/.vscodeignore",
