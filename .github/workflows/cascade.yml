@@ -32,6 +32,11 @@ jobs:
             echo "Already depends on ${NEW}; nothing to do"
             exit 0
           fi
+          echo "waiting for @maxonfjvipon/xslint@${NEW} to propagate to npm"
+          for i in $(seq 1 30); do
+            test -n "$(npm view "@maxonfjvipon/xslint@${NEW}" version 2>/dev/null)" && break
+            sleep 10
+          done
           npm install --save "@maxonfjvipon/xslint@^${NEW}"
           echo "changed=true" >> "${GITHUB_OUTPUT}"
       - name: Validate against the new xslint
