@@ -5,6 +5,7 @@ server that surfaces [xslint](https://github.com/maxonfjvipon/xslint)'s
 diagnostics as you type — squiggles in your editor instead of a failed build.
 
 [![test](https://github.com/maxonfjvipon/xslint-lsp/actions/workflows/test.yml/badge.svg)](https://github.com/maxonfjvipon/xslint-lsp/actions/workflows/test.yml)
+[![codecov](https://codecov.io/gh/maxonfjvipon/xslint-lsp/branch/master/graph/badge.svg)](https://codecov.io/gh/maxonfjvipon/xslint-lsp)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/maxonfjvipon/xslint-lsp/blob/master/LICENSE.txt)
 
 xslint lints XSL/XSLT stylesheets — malformed XML, invalid XPath, and stylistic
