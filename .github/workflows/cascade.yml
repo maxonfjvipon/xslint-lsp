@@ -4,7 +4,7 @@
 name: cascade
 'on':
   repository_dispatch:
-    types: [xslint-released]
+    types: [ xslint-released ]
 permissions:
   contents: write
 concurrency:
