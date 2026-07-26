@@ -51,8 +51,21 @@ npm install
 node src/server.js --stdio
 ```
 
-Point any LSP client at that command for `.xsl`/`.xslt` files. A VS Code
-extension that launches it lives in [`client/`](client).
+Point any LSP client at that command for `.xsl`/`.xslt` files.
+
+### VS Code
+
+A VS Code extension lives in [`client/`](client). It depends on the published
+`xslint-lsp` package and launches it, so the packaged extension is
+self-contained. To hack on it, open this repo and press `F5`. To build and
+publish it:
+
+```bash
+cd client
+npm install
+npm run package     # → xslint-vscode-<version>.vsix
+npm run publish     # vsce publish (needs a Marketplace publisher + PAT)
+```
 
 ## Development
 

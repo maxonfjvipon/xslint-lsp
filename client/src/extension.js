@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: MIT
  */
 
-const path = require('path')
 const {LanguageClient, TransportKind} = require('vscode-languageclient/node')
 
 /**
@@ -17,7 +16,7 @@ let client
  * as a child node process over stdio and lints every `.xsl`/`.xslt` file.
  */
 const activate = function() {
-  const module = path.join(__dirname, '..', '..', 'src', 'server.js')
+  const module = require.resolve('xslint-lsp')
   client = new LanguageClient(
     'xslint',
     'xslint',
