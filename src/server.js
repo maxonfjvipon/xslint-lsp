@@ -10,6 +10,7 @@ const {
 const {TextDocument} = require('vscode-languageserver-textdocument')
 const {lint} = require('@maxonfjvipon/xslint')
 const {diagnostics} = require('./diagnostics')
+const {actions} = require('./actions')
 
 /**
  * The connection to the editor, over whatever transport the client chose
@@ -42,7 +43,22 @@ const check = function(document) {
  * @return {object} - The initialize result
  */
 const initialize = function() {
-  return {capabilities: {textDocumentSync: TextDocumentSyncKind.Full}}
+  return {
+    capabilities: {
+      textDocumentSync: TextDocumentSyncKind.Full,
+      codeActionProvider: {codeActionKinds: ['quickfix', 'source.fixAll']},
+    },
+  }
+}
+
+/**
+ * Offer fixes for the fixable defects in the requested range.
+ * @param {{textDocument: {uri: string}, range: object}} params - The request
+ * @return {Array.<object>} - Code actions, or none for an unknown document
+ */
+const acted = function(params) {
+  const document = documents.get(params.textDocument.uri)
+  return document ? actions(document, params.range) : []
 }
 
 /**
@@ -63,6 +79,7 @@ const closed = function(event) {
 }
 
 connection.onInitialize(initialize)
+connection.onCodeAction(acted)
 documents.onDidChangeContent(changed)
 documents.onDidClose(closed)
 documents.listen(connection)

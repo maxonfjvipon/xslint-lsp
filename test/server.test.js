@@ -24,6 +24,8 @@ class Client {
     )
     this.buffer = Buffer.alloc(0)
     this.waiting = []
+    this.responses = new Map()
+    this.nextId = 1000
     this.server.stdout.on('data', (chunk) => this.consume(chunk))
   }
 
@@ -60,6 +62,10 @@ class Client {
       this.buffer = this.buffer.subarray(start + length)
       if (message.method === 'textDocument/publishDiagnostics') {
         this.waiting.shift()(message.params.diagnostics)
+      } else if (Object.hasOwn(message, 'result') && this.responses.has(message.id)) {
+        const resolve = this.responses.get(message.id)
+        this.responses.delete(message.id)
+        resolve(message.result)
       }
       boundary = this.buffer.indexOf('\r\n\r\n')
     }
@@ -71,6 +77,21 @@ class Client {
    */
   diagnostics() {
     return new Promise((resolve) => this.waiting.push(resolve))
+  }
+
+  /**
+   * Send a request and resolve with its result.
+   * @param {string} method - The request method
+   * @param {object} params - The request params
+   * @return {Promise.<*>} - The result
+   */
+  request(method, params) {
+    this.nextId += 1
+    const id = this.nextId
+    return new Promise((resolve) => {
+      this.responses.set(id, resolve)
+      this.send({id: id, method: method, params: params})
+    })
   }
 
   /**
@@ -122,5 +143,31 @@ test('reports, updates, and clears diagnostics over a document lifecycle',
         third.length,
       ],
       [true, false, 0],
+    )
+  })
+
+test('answers a code-action request, and offers none for an unknown document',
+  async function() {
+    const client = new Client()
+    client.send({id: 1, method: 'initialize',
+      params: {processId: process.pid, rootUri: null, capabilities: {}}})
+    client.send({method: 'initialized', params: {}})
+    const opened = client.diagnostics()
+    client.send({method: 'textDocument/didOpen', params: {textDocument: {
+      uri: 'file:///t.xsl', languageId: 'xsl', version: 1,
+      text: fixture('fixable.xsl')}}})
+    await opened
+    const some = await client.request('textDocument/codeAction', {
+      textDocument: {uri: 'file:///t.xsl'},
+      range: {start: {line: 0, character: 0}, end: {line: 20, character: 0}},
+      context: {diagnostics: []}})
+    const none = await client.request('textDocument/codeAction', {
+      textDocument: {uri: 'file:///gone.xsl'},
+      range: {start: {line: 0, character: 0}, end: {line: 0, character: 0}},
+      context: {diagnostics: []}})
+    await client.close()
+    assert.deepEqual(
+      [some.some((one) => one.kind === 'source.fixAll'), none],
+      [true, []],
     )
   })

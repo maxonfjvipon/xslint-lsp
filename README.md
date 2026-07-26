@@ -38,6 +38,10 @@ live buffer, not the saved file), and clears a file's diagnostics when it
 closes. Each xslint defect `{name, severity, message, line, pos}` becomes an LSP
 diagnostic whose `code` is the rule name and whose `source` is `xslint`.
 
+It also offers **code actions**: a quick-fix on each fixable defect and a
+*fix all* action for the safe fixes. Both are computed by xslint's own `fixed`
+engine, so an editor fix is byte-for-byte identical to a command-line `--fix`.
+
 ## Run it
 
 The server speaks LSP over stdio:
