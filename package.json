@@ -6,7 +6,7 @@
   "author": "Max Trunnikov",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/maxonfjvipon/xslint-lsp.git"
+    "url": "git+https://github.com/xslint/xslint-lsp.git"
   },
   "type": "commonjs",
   "main": "src/server.js",

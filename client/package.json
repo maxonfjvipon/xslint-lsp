@@ -8,11 +8,11 @@
   "icon": "images/icon.png",
   "repository": {
     "type": "git",
-    "url": "https://github.com/maxonfjvipon/xslint-lsp"
+    "url": "https://github.com/xslint/xslint-lsp"
   },
-  "homepage": "https://github.com/maxonfjvipon/xslint-lsp#readme",
+  "homepage": "https://github.com/xslint/xslint-lsp#readme",
   "bugs": {
-    "url": "https://github.com/maxonfjvipon/xslint-lsp/issues"
+    "url": "https://github.com/xslint/xslint-lsp/issues"
   },
   "keywords": [
     "xsl",

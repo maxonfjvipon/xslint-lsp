@@ -2,7 +2,7 @@
 
 Lint your XSL/XSLT stylesheets as you type — malformed XML, invalid XPath, and
 stylistic defects — with quick-fixes, powered by
-[xslint](https://github.com/maxonfjvipon/xslint).
+[xslint](https://github.com/xslint/xslint).
 
 ## Features
 
