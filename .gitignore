@@ -1,0 +1,9 @@
+node_modules/
+coverage/
+.nyc_output
+client/node_modules/
+client/out/
+*.vsix
+*.tgz
+.DS_Store
+.idea

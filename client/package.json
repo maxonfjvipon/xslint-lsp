@@ -1,0 +1,38 @@
+{
+  "name": "xslint-vscode",
+  "displayName": "xslint",
+  "description": "XSL/XSLT linting in your editor, powered by xslint",
+  "version": "0.0.0",
+  "publisher": "maxonfjvipon",
+  "license": "MIT",
+  "repository": "https://github.com/maxonfjvipon/xslint-lsp",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": [
+    "Linters"
+  ],
+  "activationEvents": [
+    "onLanguage:xsl",
+    "onLanguage:xml"
+  ],
+  "main": "./src/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "xsl",
+        "extensions": [
+          ".xsl",
+          ".xslt"
+        ],
+        "aliases": [
+          "XSL",
+          "XSLT"
+        ]
+      }
+    ]
+  },
+  "dependencies": {
+    "vscode-languageclient": "^9.0.1"
+  }
+}
