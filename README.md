@@ -1,17 +1,17 @@
 # xslint-lsp
 
 A [Language Server Protocol](https://microsoft.github.io/language-server-protocol/)
-server that surfaces [xslint](https://github.com/maxonfjvipon/xslint)'s
+server that surfaces [xslint](https://github.com/xslint/xslint)'s
 diagnostics as you type — squiggles in your editor instead of a failed build.
 
-[![DevOps By Rultor.com](https://www.rultor.com/b/maxonfjvipon/xslint-lsp)](https://www.rultor.com/p/maxonfjvipon/xslint-lsp)
+[![DevOps By Rultor.com](https://www.rultor.com/b/xslint/xslint-lsp)](https://www.rultor.com/p/xslint/xslint-lsp)
 
 [![npm](https://img.shields.io/npm/v/xslint-lsp.svg?style=flat)](https://www.npmjs.com/package/xslint-lsp)
-[![test](https://github.com/maxonfjvipon/xslint-lsp/actions/workflows/test.yml/badge.svg)](https://github.com/maxonfjvipon/xslint-lsp/actions/workflows/test.yml)
-[![codecov](https://codecov.io/gh/maxonfjvipon/xslint-lsp/branch/master/graph/badge.svg)](https://codecov.io/gh/maxonfjvipon/xslint-lsp)
-[![PDD status](http://www.0pdd.com/svg?name=maxonfjvipon/xslint-lsp)](http://www.0pdd.com/p?name=maxonfjvipon/xslint-lsp)
-[![Hits-of-Code](https://hitsofcode.com/github/maxonfjvipon/xslint-lsp)](https://hitsofcode.com/view/github/maxonfjvipon/xslint-lsp)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/maxonfjvipon/xslint-lsp/blob/master/LICENSE.txt)
+[![test](https://github.com/xslint/xslint-lsp/actions/workflows/test.yml/badge.svg)](https://github.com/xslint/xslint-lsp/actions/workflows/test.yml)
+[![codecov](https://codecov.io/gh/xslint/xslint-lsp/branch/master/graph/badge.svg)](https://codecov.io/gh/xslint/xslint-lsp)
+[![PDD status](http://www.0pdd.com/svg?name=xslint/xslint-lsp)](http://www.0pdd.com/p?name=xslint/xslint-lsp)
+[![Hits-of-Code](https://hitsofcode.com/github/xslint/xslint-lsp)](https://hitsofcode.com/view/github/xslint/xslint-lsp)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/xslint/xslint-lsp/blob/master/LICENSE.txt)
 
 xslint lints XSL/XSLT stylesheets — malformed XML, invalid XPath, and stylistic
 defects — but only in the terminal and CI. This wraps xslint's engine in an LSP
@@ -27,7 +27,7 @@ rule engine to keep in sync.
 
 ```text
 editor  ──(LSP over stdio)──▶  src/server.js
-                                  │  lint(buffer)      → @maxonfjvipon/xslint
+                                  │  lint(buffer)      → @xslint/xslint
                                   │  diagnostics(defects)  → src/diagnostics.js
                                   ▼
 editor  ◀──(publishDiagnostics)──  { range, severity, code: rule, message }
