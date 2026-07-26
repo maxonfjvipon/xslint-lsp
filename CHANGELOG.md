@@ -6,6 +6,10 @@ project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+## 0.0.2 - 2026-07-26
+
+- Bump `@maxonfjvipon/xslint` to 0.0.11.
+
 ## 0.0.1
 
 - Initial release. A Language Server Protocol server that wraps
