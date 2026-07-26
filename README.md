@@ -6,8 +6,11 @@ diagnostics as you type — squiggles in your editor instead of a failed build.
 
 [![DevOps By Rultor.com](https://www.rultor.com/b/maxonfjvipon/xslint-lsp)](https://www.rultor.com/p/maxonfjvipon/xslint-lsp)
 
+[![npm](https://img.shields.io/npm/v/xslint-lsp.svg?style=flat)](https://www.npmjs.com/package/xslint-lsp)
 [![test](https://github.com/maxonfjvipon/xslint-lsp/actions/workflows/test.yml/badge.svg)](https://github.com/maxonfjvipon/xslint-lsp/actions/workflows/test.yml)
 [![codecov](https://codecov.io/gh/maxonfjvipon/xslint-lsp/branch/master/graph/badge.svg)](https://codecov.io/gh/maxonfjvipon/xslint-lsp)
+[![PDD status](http://www.0pdd.com/svg?name=maxonfjvipon/xslint-lsp)](http://www.0pdd.com/p?name=maxonfjvipon/xslint-lsp)
+[![Hits-of-Code](https://hitsofcode.com/github/maxonfjvipon/xslint-lsp)](https://hitsofcode.com/view/github/maxonfjvipon/xslint-lsp)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/maxonfjvipon/xslint-lsp/blob/master/LICENSE.txt)
 
 xslint lints XSL/XSLT stylesheets — malformed XML, invalid XPath, and stylistic
