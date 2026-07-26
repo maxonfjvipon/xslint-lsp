@@ -18,8 +18,11 @@ First, in `CHANGELOG.md`, rename `## Unreleased` to `## <version> - <date>`.
 Then comment on any issue or pull request:
 
 ```text
-@rultor release, tag=0.0.3
+@rultor release, tag=`0.0.3`
 ```
+
+The backticks around the version are required — without them Rultor reads an
+empty tag and refuses the release.
 
 The tag triggers [`release.yml`](.github/workflows/release.yml), which stamps
 the version, tests, and publishes `xslint-lsp` to npm over OIDC.
