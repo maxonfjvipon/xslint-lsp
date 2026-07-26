@@ -1,0 +1,44 @@
+# SPDX-FileCopyrightText: Copyright (c) 2025-2026 Max Trunnikov
+# SPDX-License-Identifier: MIT
+---
+name: release
+'on':
+  push:
+    tags:
+      - '[0-9]+.[0-9]+.[0-9]+'
+permissions:
+  contents: write
+  id-token: write
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  release:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+      - run: npm install
+      - name: Stamp the released version
+        env:
+          VERSION: ${{ github.ref_name }}
+        run: sed -i "s/\"version\": \"0\.0\.0\"/\"version\": \"${VERSION}\"/" package.json
+      - run: npm run lint
+      - run: npm test
+      - run: npm run coverage
+      - name: Publish to npm via OIDC
+        run: |
+          npm install -g npm@latest
+          npm publish --provenance --access public
+      - name: Set the GitHub release notes from the changelog
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ github.ref_name }}
+        run: |
+          node scripts/changelog-notes.js "${VERSION}" > notes.md
+          gh release edit "${VERSION}" --notes-file notes.md \
+            || gh release create "${VERSION}" --title "${VERSION}" \
+              --notes-file notes.md

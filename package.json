@@ -4,6 +4,10 @@
   "description": "Language Server Protocol server for xslint",
   "license": "MIT",
   "author": "Max Trunnikov",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maxonfjvipon/xslint-lsp.git"
+  },
   "type": "commonjs",
   "main": "src/server.js",
   "bin": {
