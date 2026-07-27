@@ -44,6 +44,13 @@ jobs:
           gh release edit "${VERSION}" --notes-file notes.md \
             || gh release create "${VERSION}" --title "${VERSION}" \
               --notes-file notes.md
+      - name: Trigger the JetBrains plugin cascade
+        env:
+          GH_TOKEN: ${{ secrets.DISPATCH_TOKEN }}
+          VERSION: ${{ github.ref_name }}
+        run: |
+          printf '{"event_type":"xslint-lsp-released","client_payload":{"version":"%s"}}' \
+            "${VERSION}" | gh api -X POST repos/xslint/xslint-jetbrains/dispatches --input -
   extension:
     needs: release
     runs-on: ubuntu-24.04
