@@ -6,6 +6,10 @@ project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+## 0.0.4 - 2026-07-27
+
+- Bump `@maxonfjvipon/xslint` to 0.0.12.
+
 ## 0.0.3 - 2026-07-27
 
 - Publish the VS Code extension to Open VSX on release, and attach the packaged
