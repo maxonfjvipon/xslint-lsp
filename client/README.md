@@ -1,8 +1,53 @@
-# xslint for VS Code
+# xslint
 
 Lint your XSL/XSLT stylesheets as you type — malformed XML, invalid XPath, and
 stylistic defects — with quick-fixes, powered by
-[xslint](https://github.com/xslint/xslint).
+[xslint](https://github.com/xslint/xslint). Works in any VS Code-compatible
+editor.
+
+## Install
+
+This extension is published on
+[Open VSX](https://open-vsx.org/extension/maxonfjvipon/xslint-vscode) and
+attached as a `.vsix` to every
+[release](https://github.com/xslint/xslint-lsp/releases/latest). It is **not**
+on the Microsoft VS Code Marketplace.
+
+### Cursor, VSCodium, Windsurf
+
+These editors use Open VSX as their gallery — open the Extensions view, search
+**xslint**, and click Install.
+
+### Gitpod
+
+Add it to `.gitpod.yml`:
+
+```yaml
+vscode:
+  extensions:
+    - maxonfjvipon.xslint-vscode
+```
+
+### VS Code (Microsoft build)
+
+VS Code searches only Microsoft's Marketplace, where this extension is not
+listed, so install from the `.vsix`:
+
+```bash
+code --install-extension xslint-vscode-<version>.vsix
+```
+
+Or download the `.vsix` from the
+[latest release](https://github.com/xslint/xslint-lsp/releases/latest) and run
+*Extensions view → `⋯` → Install from VSIX…*.
+
+### Any other LSP editor
+
+The language server is editor-agnostic; point your client at it as described in
+[xslint-lsp](https://github.com/xslint/xslint-lsp#run-it).
+
+Once installed, open any `.xsl`/`.xslt` file — diagnostics appear as you type,
+no save or build needed.
 
 ## Features
 
