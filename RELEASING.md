@@ -27,14 +27,24 @@ empty tag and refuses the release.
 The tag triggers [`release.yml`](.github/workflows/release.yml), which stamps
 the version, tests, and publishes `xslint-lsp` to npm over OIDC.
 
-## Deferred
+## The VS Code extension
 
-The VS Code extension under `client/` is not yet published to the Marketplace
-— that hop waits on a `VSCE_PAT` (an Azure DevOps token). The npm package
-publishes regardless.
+Every release also builds the `client/` extension bundling the just-released
+server, attaches the `.vsix` to the GitHub release (so anyone can install it
+directly), and — when `OVSX_TOKEN` is set — publishes it to
+[Open VSX](https://open-vsx.org), the marketplace Cursor, VSCodium, Gitpod,
+and Windsurf install from. The extension version mirrors the server version.
+
+The official VS Code Marketplace is not targeted: publishing there needs an
+Azure DevOps token, and creating the organization behind it demands an Azure
+subscription. Open VSX plus the attached `.vsix` cover the same editors
+without that.
 
 ## Prerequisites
 
 - `DISPATCH_TOKEN` — an organization secret (PAT, `repo` + `workflow` scope).
 - The `master` ruleset grants the organization admin a bypass, so the
   cascade's bump can push to the protected branch.
+- `OVSX_TOKEN` — an [Open VSX](https://open-vsx.org) access token, for the
+  extension publish. Optional: without it, the `.vsix` is still attached to
+  the release.

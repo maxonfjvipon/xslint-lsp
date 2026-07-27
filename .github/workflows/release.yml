@@ -44,3 +44,42 @@ jobs:
           gh release edit "${VERSION}" --notes-file notes.md \
             || gh release create "${VERSION}" --title "${VERSION}" \
               --notes-file notes.md
+  extension:
+    needs: release
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    env:
+      OVSX: ${{ secrets.OVSX_TOKEN }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - name: Build the extension bundling the released server
+        working-directory: client
+        env:
+          VERSION: ${{ github.ref_name }}
+        run: |
+          npm ci
+          echo "waiting for xslint-lsp@${VERSION} to propagate to npm"
+          for _ in $(seq 1 30); do
+            test -n "$(npm view "xslint-lsp@${VERSION}" version 2>/dev/null)" && break
+            sleep 10
+          done
+          npm install --save-exact "xslint-lsp@${VERSION}"
+          npm version "${VERSION}" --no-git-tag-version
+          npx vsce package --out "xslint-vscode-${VERSION}.vsix"
+      - name: Attach the extension to the GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ github.ref_name }}
+        run: gh release upload "${VERSION}" "client/xslint-vscode-${VERSION}.vsix"
+      - name: Publish to Open VSX
+        if: env.OVSX != ''
+        working-directory: client
+        env:
+          VERSION: ${{ github.ref_name }}
+        run: |
+          npx --yes ovsx create-namespace maxonfjvipon -p "${OVSX}" || true
+          npx --yes ovsx publish "xslint-vscode-${VERSION}.vsix" -p "${OVSX}"
