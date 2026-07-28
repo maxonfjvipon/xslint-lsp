@@ -13,19 +13,26 @@ if (!version) {
 }
 
 const lines = fs.readFileSync('CHANGELOG.md', 'utf-8').split('\n')
-const start = lines.findIndex(
-  (line) => line === `## ${version}` || line.startsWith(`## ${version} `),
-)
-if (start < 0) {
-  throw new Error(`no "## ${version}" section in CHANGELOG.md`)
-}
-const next = lines.findIndex(
-  (line, index) => index > start && line.startsWith('## '),
-)
-const stop = next < 0 ? lines.length : next
-const notes = lines.slice(start + 1, stop).join('\n').trim()
-if (notes === '') {
-  throw new Error(`the "## ${version}" section is empty`)
+
+/**
+ * Trimmed body of the "## <heading>" section, empty when it is absent.
+ * @param {string} heading - Section heading to read
+ * @return {string} - Section body
+ */
+const section = function(heading) {
+  const start = lines.findIndex(
+    (line) => line === `## ${heading}` || line.startsWith(`## ${heading} `),
+  )
+  if (start < 0) {
+    return ''
+  }
+  const next = lines.findIndex(
+    (line, index) => index > start && line.startsWith('## '),
+  )
+  return lines.slice(start + 1, next < 0 ? lines.length : next).join('\n').trim()
 }
 
+// Prefer this version's section; fall back to Unreleased, then a bare line, so
+// an automated cascade with no human to curate the changelog is never blocked.
+const notes = section(version) || section('Unreleased') || `Release ${version}`
 process.stdout.write(`${notes}\n`)
